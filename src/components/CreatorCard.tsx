@@ -57,16 +57,16 @@ export const CreatorCard = ({ creator, selected, onToggle }: Props) => {
 
       {/* Tags */}
       <div className="mt-5 flex flex-wrap justify-center gap-1.5">
-        <span className="rounded-md bg-chip px-2 py-1 text-xs font-light text-chip-foreground">
+        <span className="rounded-md px-2 py-1 text-xs font-light text-chip-foreground bg-[#f0f0f0]/[0.17]">
           {creator.platform}
         </span>
-        <span className="rounded-md bg-chip px-2 py-1 text-xs font-light text-chip-foreground">
+        <span className="rounded-md px-2 py-1 text-xs font-light text-chip-foreground bg-[#f0f0f0]/[0.17]">
           {creator.category}
         </span>
-        <span className="rounded-md bg-chip px-2 py-1 text-xs font-light text-chip-foreground">
+        <span className="rounded-md px-2 py-1 text-xs font-light text-chip-foreground bg-[#f0f0f0]/[0.17]">
           {creator.region}
         </span>
-        <span className="rounded-md bg-chip px-2 py-1 text-xs font-light text-chip-foreground">
+        <span className="rounded-md px-2 py-1 text-xs font-light text-chip-foreground bg-[#f0f0f0]/[0.17]">
           {creator.gender}
         </span>
       </div>
