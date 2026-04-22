@@ -55,7 +55,6 @@ export const CreatorLibrary = () => {
         <header className="mb-8 flex items-end justify-between">
           <div>
             <div className="flex items-center gap-2.5">
-              <Users className="h-5 w-5 text-foreground" strokeWidth={2.25} />
               <h1 className="text-[28px] tracking-tight text-foreground font-light">
                 已签约达人库
               </h1>
