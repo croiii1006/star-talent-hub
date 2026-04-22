@@ -25,6 +25,7 @@ export default {
           DEFAULT: "hsl(var(--chip))",
           foreground: "hsl(var(--chip-foreground))",
         },
+        "accent-orange": "hsl(var(--accent-orange))",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
