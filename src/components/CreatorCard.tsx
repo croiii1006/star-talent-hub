@@ -15,8 +15,8 @@ export const CreatorCard = ({ creator, selected, onToggle }: Props) => {
       type="button"
       onClick={() => onToggle(creator.id)}
       className={cn(
-        "group relative w-full overflow-hidden rounded-2xl border border-white/50 bg-surface-elevated/55 backdrop-blur-xl px-6 pb-6 pt-8 text-center font-light transition-all duration-300",
-        "shadow-[var(--shadow-card)] hover:bg-surface-elevated/75 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-0.5",
+        "group relative w-full overflow-hidden rounded-2xl border border-white/30 bg-surface-elevated/25 backdrop-blur-xl px-6 pb-6 pt-8 text-center font-light transition-all duration-300",
+        "shadow-[var(--shadow-card)] hover:bg-surface-elevated/40 hover:shadow-[var(--shadow-card-hover)] hover:-translate-y-0.5",
         selected && "ring-2 ring-foreground ring-offset-2 ring-offset-background",
       )}
     >
