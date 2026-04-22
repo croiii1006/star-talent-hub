@@ -152,23 +152,6 @@ export const CreatorLibrary = () => {
         <div className="h-32" />
       </div>
 
-      {/* Footer bar */}
-      <div className="fixed inset-x-0 bottom-0 z-30 border-t border-border/60 bg-background/85 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-[1280px] items-center justify-between px-8 py-4">
-          <p className="text-sm text-muted-foreground">
-            已选 <span className="font-semibold text-foreground">{selected.size}</span> 位达人,将作为对标参考人物
-          </p>
-          <button
-            disabled={selected.size === 0}
-            className={cn(
-              "inline-flex items-center gap-2 rounded-full bg-foreground px-7 py-3 text-sm font-medium text-background shadow-[var(--shadow-float)] transition",
-              "hover:opacity-90 disabled:opacity-40 disabled:shadow-none",
-            )}
-          >
-            确认 ({selected.size})
-          </button>
-        </div>
-      </div>
     </div>
   );
 };
