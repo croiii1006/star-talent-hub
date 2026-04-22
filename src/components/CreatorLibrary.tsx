@@ -1,26 +1,24 @@
 import { useMemo, useState } from "react";
-import { ChevronDown, SlidersHorizontal, Users, X } from "lucide-react";
+import { ChevronDown, SlidersHorizontal, X } from "lucide-react";
 import { creators } from "@/data/creators";
 import { CreatorCard } from "@/components/CreatorCard";
 import { cn } from "@/lib/utils";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
-const PLATFORMS = ["TikTok Shop", "抖音", "小红书", "Instagram", "YouTube"];
-const GENDERS = ["男性", "女性"];
-const CATEGORIES = ["美妆", "穿搭", "数码", "美食", "生活"];
+type RegionFilter = "全部" | "中国" | "海外";
+type GenderFilter = "全部" | "男" | "女";
+
+const REGIONS: RegionFilter[] = ["全部", "中国", "海外"];
+const GENDERS: GenderFilter[] = ["全部", "男", "女"];
 
 export const CreatorLibrary = () => {
   const [selected, setSelected] = useState<Set<string>>(new Set());
-  const [platforms, setPlatforms] = useState<Set<string>>(new Set());
-  const [genders, setGenders] = useState<Set<string>>(new Set());
-  const [categories, setCategories] = useState<Set<string>>(new Set());
+  const [region, setRegion] = useState<RegionFilter>("全部");
+  const [gender, setGender] = useState<GenderFilter>("全部");
 
   const toggle = (id: string) =>
     setSelected((s) => {
@@ -29,24 +27,41 @@ export const CreatorLibrary = () => {
       return next;
     });
 
-  const toggleSet =
-    (setter: React.Dispatch<React.SetStateAction<Set<string>>>) => (val: string) =>
-      setter((s) => {
-        const next = new Set(s);
-        next.has(val) ? next.delete(val) : next.add(val);
-        return next;
-      });
-
   const filtered = useMemo(() => {
     return creators.filter((c) => {
-      if (platforms.size && !platforms.has(c.platform)) return false;
-      if (genders.size && !genders.has(c.gender)) return false;
-      if (categories.size && !categories.has(c.category)) return false;
+      if (region === "中国" && c.region !== "CN") return false;
+      if (region === "海外" && c.region === "CN") return false;
+      if (gender === "男" && c.gender !== "男性") return false;
+      if (gender === "女" && c.gender !== "女性") return false;
       return true;
     });
-  }, [platforms, genders, categories]);
+  }, [region, gender]);
 
-  const activeFilterCount = platforms.size + genders.size + categories.size;
+  const activeFilterCount =
+    (region !== "全部" ? 1 : 0) + (gender !== "全部" ? 1 : 0);
+
+  const Pill = ({
+    active,
+    onClick,
+    children,
+  }: {
+    active: boolean;
+    onClick: () => void;
+    children: React.ReactNode;
+  }) => (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "rounded-full px-5 py-2 text-sm font-light transition",
+        active
+          ? "bg-foreground text-background"
+          : "bg-transparent text-foreground border border-border/60 hover:border-border",
+      )}
+    >
+      {children}
+    </button>
+  );
 
   return (
     <div className="min-h-screen" style={{ background: "var(--gradient-warm)" }}>
@@ -67,60 +82,61 @@ export const CreatorLibrary = () => {
 
         {/* Filter bar */}
         <div className="mb-8 flex flex-wrap items-center gap-2.5">
-          <DropdownMenu>
-            <DropdownMenuTrigger className="inline-flex items-center gap-2 rounded-full bg-surface-elevated/60 backdrop-blur-xl px-4 py-2 text-sm font-medium text-foreground shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)] border border-white/40">
+          <Popover>
+            <PopoverTrigger className="inline-flex items-center gap-2 rounded-full bg-surface-elevated/60 backdrop-blur-xl px-4 py-2 text-sm font-medium text-foreground shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)] border border-white/40">
               <SlidersHorizontal className="h-3.5 w-3.5" />
               全部达人
               <span className="rounded-full bg-chip px-2 py-0.5 text-xs text-chip-foreground">
                 {filtered.length}
               </span>
               <ChevronDown className="h-3.5 w-3.5 opacity-60" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="start" className="w-56">
-              <DropdownMenuLabel>平台</DropdownMenuLabel>
-              {PLATFORMS.map((p) => (
-                <DropdownMenuCheckboxItem
-                  key={p}
-                  checked={platforms.has(p)}
-                  onCheckedChange={() => toggleSet(setPlatforms)(p)}
-                  onSelect={(e) => e.preventDefault()}
-                >
-                  {p}
-                </DropdownMenuCheckboxItem>
-              ))}
-              <DropdownMenuSeparator />
-              <DropdownMenuLabel>性别</DropdownMenuLabel>
-              {GENDERS.map((g) => (
-                <DropdownMenuCheckboxItem
-                  key={g}
-                  checked={genders.has(g)}
-                  onCheckedChange={() => toggleSet(setGenders)(g)}
-                  onSelect={(e) => e.preventDefault()}
-                >
-                  {g}
-                </DropdownMenuCheckboxItem>
-              ))}
-              <DropdownMenuSeparator />
-              <DropdownMenuLabel>品类</DropdownMenuLabel>
-              {CATEGORIES.map((c) => (
-                <DropdownMenuCheckboxItem
-                  key={c}
-                  checked={categories.has(c)}
-                  onCheckedChange={() => toggleSet(setCategories)(c)}
-                  onSelect={(e) => e.preventDefault()}
-                >
-                  {c}
-                </DropdownMenuCheckboxItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </PopoverTrigger>
+            <PopoverContent
+              align="start"
+              className="w-[360px] rounded-2xl border border-white/40 bg-surface-elevated/90 backdrop-blur-xl p-6 shadow-[var(--shadow-card-hover)]"
+            >
+              <div className="space-y-5">
+                <div>
+                  <div className="mb-3 text-sm font-light text-muted-foreground">
+                    区域
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {REGIONS.map((r) => (
+                      <Pill
+                        key={r}
+                        active={region === r}
+                        onClick={() => setRegion(r)}
+                      >
+                        {r}
+                      </Pill>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <div className="mb-3 text-sm font-light text-muted-foreground">
+                    性别
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {GENDERS.map((g) => (
+                      <Pill
+                        key={g}
+                        active={gender === g}
+                        onClick={() => setGender(g)}
+                      >
+                        {g}
+                      </Pill>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </PopoverContent>
+          </Popover>
 
           {activeFilterCount > 0 && (
             <button
               onClick={() => {
-                setPlatforms(new Set());
-                setGenders(new Set());
-                setCategories(new Set());
+                setRegion("全部");
+                setGender("全部");
               }}
               className="inline-flex items-center gap-1.5 rounded-full px-3 py-2 text-sm text-muted-foreground transition hover:text-foreground"
             >
@@ -150,7 +166,6 @@ export const CreatorLibrary = () => {
 
         <div className="h-32" />
       </div>
-
     </div>
   );
 };
