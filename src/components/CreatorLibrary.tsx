@@ -49,7 +49,7 @@ export const CreatorLibrary = () => {
   const activeFilterCount = platforms.size + genders.size + categories.size;
 
   return (
-    <div className="min-h-screen bg-surface">
+    <div className="min-h-screen" style={{ background: "var(--gradient-warm)" }}>
       <div className="mx-auto max-w-[1280px] px-8 py-12">
         {/* Header */}
         <header className="mb-8 flex items-end justify-between">
@@ -69,7 +69,7 @@ export const CreatorLibrary = () => {
         {/* Filter bar */}
         <div className="mb-8 flex flex-wrap items-center gap-2.5">
           <DropdownMenu>
-            <DropdownMenuTrigger className="inline-flex items-center gap-2 rounded-full bg-surface-elevated px-4 py-2 text-sm font-medium text-foreground shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)]">
+            <DropdownMenuTrigger className="inline-flex items-center gap-2 rounded-full bg-surface-elevated/60 backdrop-blur-xl px-4 py-2 text-sm font-medium text-foreground shadow-[var(--shadow-card)] transition hover:shadow-[var(--shadow-card-hover)] border border-white/40">
               <SlidersHorizontal className="h-3.5 w-3.5" />
               全部达人
               <span className="rounded-full bg-chip px-2 py-0.5 text-xs text-chip-foreground">
@@ -144,7 +144,7 @@ export const CreatorLibrary = () => {
         </div>
 
         {filtered.length === 0 && (
-          <div className="rounded-2xl bg-surface-elevated py-20 text-center text-sm text-muted-foreground shadow-[var(--shadow-card)]">
+          <div className="rounded-2xl bg-surface-elevated/60 backdrop-blur-xl border border-white/40 py-20 text-center text-sm text-muted-foreground shadow-[var(--shadow-card)]">
             暂无符合条件的达人
           </div>
         )}
