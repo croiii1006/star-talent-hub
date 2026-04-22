@@ -30,8 +30,8 @@ export const CreatorCard = ({ creator, selected, onToggle }: Props) => {
 
       {/* Name + handle */}
       <div className="mt-4">
-        <div className="truncate text-base font-normal text-foreground">{creator.name}</div>
-        <div className="mt-1 truncate text-xs font-light text-muted-foreground">@{creator.handle}</div>
+        <div className="truncate font-normal text-foreground text-2xl">{creator.name}</div>
+        <div className="mt-1 truncate font-light text-muted-foreground text-base">@{creator.handle}</div>
       </div>
 
       {/* Stats */}
