@@ -13,8 +13,8 @@ All colors MUST be HSL.
 
     --surface: 35 40% 96%;
     --surface-elevated: 0 0% 100%;
-    --chip: 30 25% 94%;
-    --chip-foreground: 25 15% 35%;
+    --chip: 0 0% 94%;
+    --chip-foreground: 0 0% 35%;
 
     --accent-orange: 22 95% 55%;
 
