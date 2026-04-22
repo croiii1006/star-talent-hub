@@ -93,7 +93,7 @@ export const CreatorLibrary = () => {
             </PopoverTrigger>
             <PopoverContent
               align="start"
-              className="w-[360px] rounded-2xl border border-white/40 bg-surface-elevated/90 backdrop-blur-xl p-6 shadow-[var(--shadow-card-hover)]"
+              className="w-[360px] rounded-2xl border border-white/30 bg-surface-elevated/40 backdrop-blur-2xl p-6 shadow-[var(--shadow-card-hover)]"
             >
               <div className="space-y-5">
                 <div>
